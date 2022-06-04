@@ -46,4 +46,8 @@ select * from hetero_heap_tuple('select * from spot_price','to_dcept') as spot_p
 inner join hetero_heap_tuple('select * from jobs','to_hr') 
         as j (job_id varchar,job_title varchar,min_sal numeric,max_sal numeric)
         on e.job_id = j.job_id;
+
+select * from hetero_query('select * from fb_test.t0@to_fb limit 100') as t0(id int, cat text, aid int, bid int, cid int, did int, eid int, fid int, gid int, hid int);
+
+select * from hetero_query('select b.* from jobs b inner join emps@to_hr e on b.job_id = b.job_id') as j (job_id varchar,job_title varchar,min_sal numeric,max_sal numeric);
  ```
