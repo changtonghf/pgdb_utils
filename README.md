@@ -52,8 +52,57 @@ select * from hetero_query('select * from fb_test.t0@to_fb limit 100') as t0(id 
 select * from hetero_query('select b.* from jobs b inner join emps@to_hr e on b.job_id = b.job_id') as j (job_id varchar,job_title varchar,min_sal numeric,max_sal numeric);
  ```
  # Predict Pushdown Rules
-|               | INNER JOIN |             | LEFT JOIN  |             | RIGHT_JOIN |             | FULL_JOIN  |             |
-|---------------|------------|-------------|------------|-------------|------------|-------------|------------|-------------|
-|               | LEFT TABLE | RIGHT TABLE | LEFT TABLE | RIGHT TABLE | LEFT TABLE | RIGHT TABLE | LEFT TABLE | RIGHT TABLE |
-| JOIN_PREDICT  | Pushed     | Pushed      | Not Pushed | Pushed      | Pushed     | Not Pushed  | Not Pushed | Not Pushed  |
-| WHERE_PREDICT | Pushed     | Pushed      | Pushed     | Pushed      | Pushed     | Pushed      | Pushed     | Pushed      |
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
+.tg .tg-dvpl{border-color:inherit;text-align:right;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-dvpl" rowspan="2"></th>
+    <th class="tg-c3ow" colspan="2">INNER JOIN</th>
+    <th class="tg-c3ow" colspan="2">LEFT JOIN</th>
+    <th class="tg-c3ow" colspan="2">RIGHT_JOIN</th>
+    <th class="tg-c3ow" colspan="2">FULL_JOIN</th>
+  </tr>
+  <tr>
+    <th class="tg-c3ow">LEFT TABLE</th>
+    <th class="tg-c3ow">RIGHT TABLE</th>
+    <th class="tg-c3ow">LEFT TABLE</th>
+    <th class="tg-c3ow">RIGHT TABLE</th>
+    <th class="tg-c3ow">LEFT TABLE</th>
+    <th class="tg-c3ow">RIGHT TABLE</th>
+    <th class="tg-c3ow">LEFT TABLE</th>
+    <th class="tg-c3ow">RIGHT TABLE</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-dvpl">JOIN_PREDICT</td>
+    <td class="tg-c3ow">Pushed</td>
+    <td class="tg-c3ow">Pushed</td>
+    <td class="tg-c3ow">Not Pushed</td>
+    <td class="tg-c3ow">Pushed</td>
+    <td class="tg-c3ow">Pushed</td>
+    <td class="tg-c3ow">Not Pushed</td>
+    <td class="tg-c3ow">Not Pushed</td>
+    <td class="tg-c3ow">Not Pushed</td>
+  </tr>
+  <tr>
+    <td class="tg-dvpl">WHERE_PREDICT</td>
+    <td class="tg-c3ow">Pushed</td>
+    <td class="tg-c3ow">Pushed</td>
+    <td class="tg-c3ow">Pushed</td>
+    <td class="tg-c3ow">Pushed</td>
+    <td class="tg-c3ow">Pushed</td>
+    <td class="tg-c3ow">Pushed</td>
+    <td class="tg-c3ow">Pushed</td>
+    <td class="tg-c3ow">Pushed</td>
+  </tr>
+</tbody>
+</table>
