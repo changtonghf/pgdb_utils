@@ -82,7 +82,7 @@ as $$
         elif fds[0]["fdwname"] == 'mysql_fdw':
             conn = pymysql.connect(user=fds[0]["umoptions"][0][9:], password=fds[0]["umoptions"][1][9:], host=fds[0]["srvoptions"][0][5:], port=int(fds[0]["srvoptions"][1][5:]))
             cursor = conn.cursor()
-            cursor.execute("select lower(column_name),lower(data_type),ordinal_position from information_schema.columns where table_schema = " + plpy.quote_literal(relation[0:relation.index('.')]) + " and table_name = " + plpy.quote_literal(relation[relation.index('.')+1:]))
+            cursor.execute("select lower(column_name),lower(data_type),ordinal_position from information_schema.columns where table_schema = " + plpy.quote_literal(relation[0:relation.index('.')]) + " and table_name = " + plpy.quote_literal(relation[relation.index('.')+1:]) + " order by ordinal_position asc")
             meta = cursor.fetchall()
         else:
             plpy.error('0A000', detail='this database is not supported in foreign data wrapper', hint='sorry,we will support this later')
