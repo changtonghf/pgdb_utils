@@ -51,3 +51,9 @@ select * from hetero_query('select * from fb_test.t0@to_fb limit 100') as t0(id 
 
 select * from hetero_query('select b.* from jobs b inner join emps@to_hr e on b.job_id = b.job_id') as j (job_id varchar,job_title varchar,min_sal numeric,max_sal numeric);
  ```
+ # Predict Pushdown Rules
+|               | INNER JOIN |             | LEFT JOIN  |             | RIGHT_JOIN |             | FULL_JOIN  |             |
+|---------------|------------|-------------|------------|-------------|------------|-------------|------------|-------------|
+|               | LEFT TABLE | RIGHT TABLE | LEFT TABLE | RIGHT TABLE | LEFT TABLE | RIGHT TABLE | LEFT TABLE | RIGHT TABLE |
+| JOIN_PREDICT  | Pushed     | Pushed      | Not Pushed | Pushed      | Pushed     | Not Pushed  | Not Pushed | Not Pushed  |
+| WHERE_PREDICT | Pushed     | Pushed      | Pushed     | Pushed      | Pushed     | Pushed      | Pushed     | Pushed      |
